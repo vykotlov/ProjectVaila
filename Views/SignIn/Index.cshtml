@@ -1,0 +1,23 @@
+﻿<link rel="stylesheet" href="~/css/SignInAndSignUp.css">
+
+<form class="form-signin m-auto w-100 text-center">
+	<a href="/Home/Index"><img class="mb-4" src="~/icons/logos/vailaLogo.png" alt="" height="57"></a>
+	<h1 class="h3 mb-3 fw-normal text-black-50">Авторизация</h1>
+	<div class="form-floating col-12">
+		<input type="email" class="form-control start-input" id="floatingInput" placeholder="name@example.com">
+		<label for="floatingInput">Email адрес или номер телефона</label>
+	</div>
+	<div class="form-floating col-12">
+		<input type="password" class="form-control end-input" id="floatingPassword" placeholder="Password">
+		<label for="floatingPassword">Пароль</label>
+	</div>
+
+	<div class="checkbox mb-3">
+		<label class="text-black">
+			<input type="checkbox" value="remember-me"> Запомнить меня
+		</label>
+	</div>
+	<button class="w-100 btn btn-lg mb-3" type="button" style="background-color: #65D4EB; color: aliceblue;" onclick="location.href='@Url.Action("Index", "Home")'">Войти</button>
+	<button class="w-100 btn btn-lg" type="button" style="background-color: #65D4EB; color: aliceblue;"onclick="location.href='@Url.Action("Index", "SignUp")'">Создать аккаунт</button>
+	<p class="mt-5 mb-3 text-muted">Vaila company &copy; 2023</p>
+</form>

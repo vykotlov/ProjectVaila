@@ -1,4 +1,9 @@
 ﻿@using ProjectVaila.Controllers
+@{
+	bool displayHeader = ViewBag.DisplayHeader is null ? true : ViewBag.DisplayHeader;
+	string title = ViewBag.PageTitle is null ? "Vaila" : $"Vaila | {ViewBag.PageTitle}";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +11,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Project Vaila</title>
+	<title>@title</title>
 
 	<link rel="icon" href="~/icons/logos/vailaTitleLogo.png">
 
@@ -17,57 +22,60 @@
 </head>
 <body>
 <div class="container">
-	<header class="p-3 mb-3 border-bottom">
-		<div class="container">
-			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-					<a href="/" class="d-flex align-items-center justify-content-center justify-content-lg-start col-12 col-lg-2 mb-3 mb-lg-0 text-dark text-decoration-none" href="~/Home/Index">
-					<img class="bi bi-handbag me-2" width="auto" height="50" role="img" aria-label="Home" src="~/icons/logos/vailaLogo.png">
-				</a>
-				<div class="col-12 col-lg-9 me-lg-auto justify-content-center align-items-center text-center d-flex flex-wrap">
-					<div class="dropdown open col-12 col-lg-2 px-2 mb-lg-0 mb-3">
-						<button class="btn btn-info dropdown-toggle w-100 text-light" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Категории
-						</button>
-						<div class="dropdown-menu" aria-labelledby="triggerId">
-							<button class="dropdown-item" href="#"><img src="~/icons/productTypes/auto.png" width="30" class="mx-2 text-start">Авто</button>          <!--Транспорт-->
-							<button class="dropdown-item" href="#"><img src="~/icons/productTypes/house.png" width="30" class="mx-2 text-start">Недвижимость</button>
-							<button class="dropdown-item" href="#"><img src="~/icons/productTypes/electronics.png" width="30" class="mx-2 text-start">Электроника</button>
-							<button class="dropdown-item" href="#"><img src="~/icons/productTypes/clothes.png" width="30" class="mx-2 text-start">Одежда</button>
+	@if (displayHeader)
+	{
+			<header class="p-3 mb-3 border-bottom">
+				<div class="container">
+					<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+						<a href="/" class="d-flex align-items-center justify-content-center justify-content-lg-start col-12 col-lg-2 mb-3 mb-lg-0 text-dark text-decoration-none" href="~/Home/Index">
+							<img class="bi bi-handbag me-2" width="auto" height="50" role="img" aria-label="Home" src="~/icons/logos/vailaLogo.png">
+						</a>
+						<div class="col-12 col-lg-9 me-lg-auto justify-content-center align-items-center text-center d-flex flex-wrap">
+							<div class="dropdown open col-12 col-lg-2 px-2 mb-lg-0 mb-3">
+								<button class="btn btn-info dropdown-toggle w-100 text-light" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Категории
+								</button>
+								<div class="dropdown-menu" aria-labelledby="triggerId">
+									<button class="dropdown-item" href="#"><img src="~/icons/productTypes/auto.png" width="30" class="mx-2 text-start">Авто</button>          <!--Транспорт-->
+									<button class="dropdown-item" href="#"><img src="~/icons/productTypes/house.png" width="30" class="mx-2 text-start">Недвижимость</button>
+									<button class="dropdown-item" href="#"><img src="~/icons/productTypes/electronics.png" width="30" class="mx-2 text-start">Электроника</button>
+									<button class="dropdown-item" href="#"><img src="~/icons/productTypes/clothes.png" width="30" class="mx-2 text-start">Одежда</button>
+								</div>
+							</div>
+
+							<form class="col-12 col-lg-7 px-2 mb-lg-0 mb-3" role="search">
+								<input type="search" class="form-control" placeholder="Поиск по объявлениям" aria-label="Search">
+							</form>
+
+							<div class="col-12 col-lg-3 px-2 mb-lg-0 mb-3">
+								<button type="button" class="btn w-100 text-light" style="background-color:#5BE3D1; color:aliceblue;">Новое объявление</button>
+							</div>
 						</div>
-					</div>
-
-					<form class="col-12 col-lg-7 px-2 mb-lg-0 mb-3" role="search">
-						<input type="search" class="form-control" placeholder="Поиск по объявлениям" aria-label="Search">
-					</form>
-
-					<div class="col-12 col-lg-3 px-2 mb-lg-0 mb-3">
-						<button type="button" class="btn w-100 text-light" style="background-color:#5BE3D1; color:aliceblue;">Новое объявление</button>
+						@if (User.Identity.IsAuthenticated)
+						{
+							<div class="dropdown text-end">
+								<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+									<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+								</a>
+								<ul class="dropdown-menu text-small">
+									<li><a class="dropdown-item" href="#">Профиль</a></li>
+									<li><a class="dropdown-item" href="#">Сообщения</a></li>
+									<li><a class="dropdown-item" href="#">Избранное</a></li>
+									<li><a class="dropdown-item" href="#">Мои объявления</a></li>
+									<li><a class="dropdown-item" href="#">Новое объявление</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="#">Выйти</a></li>
+								</ul>
+							</div>
+						}
+						else
+						{
+							<button type="button" class="btn text-end mb-3 mb-lg-0" style="background-color:#65D4EB; color:aliceblue;" onclick="location.href='@Url.Action("Index", "SignIn")'">Войти</button>
+						}
 					</div>
 				</div>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<div class="dropdown text-end">
-						<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-						</a>
-						<ul class="dropdown-menu text-small">
-							<li><a class="dropdown-item" href="#">Профиль</a></li>
-							<li><a class="dropdown-item" href="#">Сообщения</a></li>
-							<li><a class="dropdown-item" href="#">Избранное</a></li>
-							<li><a class="dropdown-item" href="#">Мои объявления</a></li>
-							<li><a class="dropdown-item" href="#">Новое объявление</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Выйти</a></li>
-						</ul>
-					</div>
-				}
-				else
-				{
-					<button type="button" class="btn text-end mb-3 mb-lg-0" style="background-color:#65D4EB; color:aliceblue;">Войти</button>
-				}
-			</div>
-		</div>
-	</header>
+			</header>
+	}
 	<main>
 		@RenderBody()
 	</main>

@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProjectVaila.ViewModels.SignUpViewModel
+
+<link rel="stylesheet" href="~/css/SignInAndSignUp.css">
+
+<form class="form-signin m-auto w-100 text-center" method="post" asp-controller="SignUp" asp-action="Index">
+	<a href="/Home/Index"><img class="mb-4" src="~/icons/logos/vailaLogo.png" alt="" height="57"></a>
+	<h1 class="h3 mb-3 fw-normal text-black-50">Регистрация</h1>
+
+	<div class="row g-0 mb-3">
+		<div class="form-floating col-6">
+			<input asp-for="FirstName" type="text" name="FirstName" class="form-control start-left-input" id="floatingInput" placeholder="Иван">
+			<label asp-for="FirstName">Имя</label>
+		</div>
+		<div class="form-floating col-6">
+			<input asp-for="LastName" type="text" name="LastName" class="form-control start-right-input" id="floatingInput" placeholder="Иванов">
+			<label asp-for="LastName">Фамилия</label>
+		</div>
+		<div class="form-floating col-12">
+			<input asp-for="Email" type="email" name="Email" class="form-control medium-input" id="floatingInput" placeholder="name@example.com">
+			<label asp-for="Email">Email адрес</label>
+		</div>
+		<div class="form-floating col-12">
+			<input asp-for="Password" type="password" name="Password" class="form-control medium-input" id="floatingPassword" placeholder="Password">
+			<label asp-for="Password">Пароль</label>
+		</div>
+		<div class="form-floating col-12">
+			<input asp-for="PasswordConfirm" type="password" name="PasswordConfirm" class="form-control end-input" id="floatingPassword" placeholder="Password">
+			<label asp-for="PasswordConfirm">Подтвердите пароль</label>
+		</div>
+	</div>
+
+	<button class="w-100 btn btn-lg" type="submit" style="background-color:#65D4EB; color:aliceblue;">Создать аккаунт</button>
+	<p class="mt-5 mb-3 text-muted">Vaila company &copy; 2023</p>
+</form>
