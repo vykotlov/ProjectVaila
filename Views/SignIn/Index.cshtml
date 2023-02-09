@@ -1,23 +1,42 @@
-﻿<link rel="stylesheet" href="~/css/SignInAndSignUp.css">
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProjectVaila.ViewModels.SignInViewModel
 
-<form class="form-signin m-auto w-100 text-center">
+<link rel="stylesheet" href="~/css/SignInAndSignUp.css">
+
+<form class="form-signin m-auto w-100 text-center" method="post" asp-controller="SignIn" asp-action="Index">
 	<a href="/Home/Index"><img class="mb-4" src="~/icons/logos/vailaLogo.png" alt="" height="57"></a>
 	<h1 class="h3 mb-3 fw-normal text-black-50">Авторизация</h1>
+	@if (ViewData.ModelState.ErrorCount > 0)
+	{
+		<div class="alert alert-dismissible alert-info fade show" role="alert">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			<strong>Ошибка входа</strong>
+			@foreach (var errors in ViewData.ModelState.Values)
+			{
+				<ul>
+				@foreach (var error in errors.Errors)
+				{
+					<li>@error.ErrorMessage</li>
+				}
+				</ul>
+			}
+		</div>
+	}
 	<div class="form-floating col-12">
-		<input type="email" class="form-control start-input" id="floatingInput" placeholder="name@example.com">
-		<label for="floatingInput">Email адрес или номер телефона</label>
+		<input type="text" asp-for="Email" name="Email" class="form-control start-input" id="floatingInput" placeholder="name@example.com">
+		<label asp-for="Email" for="floatingInput">Email адрес или номер телефона</label>
 	</div>
 	<div class="form-floating col-12">
-		<input type="password" class="form-control end-input" id="floatingPassword" placeholder="Password">
-		<label for="floatingPassword">Пароль</label>
+		<input type="password" asp-for="Password" name="Password" class="form-control end-input" id="floatingPassword" placeholder="Password">
+		<label asp-for="Password" for="floatingPassword">Пароль</label>
 	</div>
 
 	<div class="checkbox mb-3">
-		<label class="text-black">
-			<input type="checkbox" value="remember-me"> Запомнить меня
+		<label asp-for="RememberMe" class="text-black">
+			<input asp-for="RememberMe" type="checkbox" value="remember-me"> Запомнить меня
 		</label>
 	</div>
-	<button class="w-100 btn btn-lg mb-3" type="button" style="background-color: #65D4EB; color: aliceblue;" onclick="location.href='@Url.Action("Index", "Home")'">Войти</button>
+	<button class="w-100 btn btn-lg mb-3" type="submit" style="background-color: #65D4EB; color: aliceblue;">Войти</button>
 	<button class="w-100 btn btn-lg" type="button" style="background-color: #65D4EB; color: aliceblue;"onclick="location.href='@Url.Action("Index", "SignUp")'">Создать аккаунт</button>
 	<p class="mt-5 mb-3 text-muted">Vaila company &copy; 2023</p>
 </form>

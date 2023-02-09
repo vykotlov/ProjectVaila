@@ -39,7 +39,7 @@ namespace ProjectVaila.Controllers.Account
 
 			var identityUser = new IdentityUserContext
 			{
-				UserName = string.Join("", model.Email.TakeWhile(c => c != '@')),
+				UserName = model.Email,
 				Email = model.Email,
 			};
 				
@@ -49,9 +49,11 @@ namespace ProjectVaila.Controllers.Account
 			{
 				await _signInManager.SignInAsync(identityUser, false);
 
+				var identityUserContext = await _userManager.FindByEmailAsync(model.Email);
+
 				var user = new User()
 				{
-					Id = _userManager.Users.Where(u => u.Email == model.Email).Select(u => u.Id).First(),
+					Id = identityUserContext.Id,
 					FirstName = model.FirstName,
 					LastName = model.LastName,
 				};
@@ -63,7 +65,26 @@ namespace ProjectVaila.Controllers.Account
 
 			foreach (var error in addUserResult.Errors)
 			{
-				ModelState.AddModelError(string.Empty, error.Description);
+				string errorDesc = error.Description;
+
+				//todo: разобраться как заменить switch на более лакончиный код
+				switch (error.Code)
+				{
+					case "PasswordTooShort":
+						errorDesc = "Пароль должен содержать как минимум 6 символов";
+						break;
+					case "PasswordRequiresNonAlphanumeric":
+						errorDesc = "Пароль должен содержать как минимум один символ не являющийся цифробуквенным";
+						break;
+					case "PasswordRequiresLower":
+						errorDesc = "Пароль должен содержать как минимум один символ в нижнем регистре ";
+						break;
+					case "PasswordRequiresUpper":
+						errorDesc = "Пароль должен содержать как минимум один символ в верхнем регистре ";
+						break;
+				}
+
+				ModelState.AddModelError(string.Empty, errorDesc);
 			}
 
 			return View(model);

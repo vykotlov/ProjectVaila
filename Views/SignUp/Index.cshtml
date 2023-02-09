@@ -7,7 +7,22 @@
 <form class="form-signin m-auto w-100 text-center" method="post" asp-controller="SignUp" asp-action="Index">
 	<a href="/Home/Index"><img class="mb-4" src="~/icons/logos/vailaLogo.png" alt="" height="57"></a>
 	<h1 class="h3 mb-3 fw-normal text-black-50">Регистрация</h1>
-
+	@if (ViewData.ModelState.ErrorCount > 0)
+	{
+		<div class="alert alert-dismissible alert-info fade show" role="alert">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			<strong>Ошибка входа</strong>
+			@foreach (var errors in ViewData.ModelState.Values)
+			{
+				<ul>
+				@foreach (var error in errors.Errors)
+				{
+					<li>@error.ErrorMessage</li>
+				}
+				</ul>
+			}
+		</div>
+	}
 	<div class="row g-0 mb-3">
 		<div class="form-floating col-6">
 			<input asp-for="FirstName" type="text" name="FirstName" class="form-control start-left-input" id="floatingInput" placeholder="Иван">
